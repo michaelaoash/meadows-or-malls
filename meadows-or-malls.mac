@@ -1,0 +1,148 @@
+/* meadows-or-malls.mac
+ * maxima script for linear programming
+ * Ash Mathematics, Summer 2019
+ * maxima -b meadows-or-malls.mac > meadows-or-malls.macout &
+ */
+
+linel : 200 ;
+
+kill(C);       /* Cost function (minimand) */
+kill(GR, AR, MR, GD, AD, MD);      /* Choice variables */
+kill(eq_i, eq_ii, eq_iii, eq_ge_iv, ineq_ge_iv, eq_le_v, ineq_le_v, eq_vi, nn_vii, nn_viii, nn_ix, nn_x, nn_xi, nn_xii);   /* Constraints */
+kill(candidate) ;
+
+
+C : 50*GR + 200*AR + 100*MR + 500*GD + 2000*AD + 1000*MD ;
+
+eq_i       : GR + GD = 300 ;
+eq_ii      : AR + AD = 100 ;
+eq_iii     : MR + MD = 150 ;
+eq_ge_iv   : GD + AD + MD = 300 ;
+ineq_ge_iv : GD + AD + MD >= 300 ;
+eq_le_v    : AR + MR = 200 ;
+ineq_le_v  : AR + MR <= 200 ;
+eq_vi      : AR + GD = 100 ;
+nn_vii     : GR = 0 ;
+nn_viii    : AR = 0 ;
+nn_ix      : MR = 0 ;
+nn_x       : GD = 0 ;
+nn_xi      : AD = 0 ;
+nn_xii     : MD = 0 ;
+
+X : [GR, AR, MR, GD, AD, MD] ;
+
+for bind1 in [eq_ge_iv,eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do block (
+  for bind2 in [eq_ge_iv,eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do block(
+    print(bind1, bind2),
+    print("       ", candidate:linsolve([eq_i, eq_ii, eq_iii, eq_vi, bind1, bind2], X ),
+      is(subst(candidate, ineq_ge_iv)),
+      is(subst(candidate, ineq_le_v)),
+      subst(candidate, C))) ) ;
+
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, eq_ge_iv, nn_ix], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, eq_ge_iv, nn_xii], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_viii, nn_xii], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_viii, nn_ix], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_ix, nn_x], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_ix, nn_xi], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_x, nn_xii], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_xi, nn_xii], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_x, nn_xi], X ) ;
+candidate : % ;
+subst(candidate, C);
+iv: subst(candidate, ineq_ge_iv) ;
+is(iv) ;
+v: subst(candidate, ineq_le_v) ;
+is(v) ;
+
+
+
+/* Use built-in LP functions in the simplex package */
+
+load(simplex);
+
+
+minimize_lp(C, [eq_i,eq_ii,eq_iii,ineq_ge_iv,ineq_le_v, eq_vi]), nonegative_lp=true ;
+
+
+c:  [ 50, 200, 100, 500, 2000, 1000 ] ;
+
+A: matrix(
+[1,0,0,1,0,0],
+[0,1,0,0,1,0],
+[0,0,1,0,0,1],
+[0,0,0,1,1,1], 
+[0,1,1,0,0,0],
+[0,1,0,1,0,0] ) ;
+
+b: [ 300, 100, 150, /* 300, */ 200, 100 ] ;
+linear_program(submatrix(4,A), b, c) ;
+/* Test if omitted inequality constraint holds */
+candidate: %[1] ;
+iv: A[4]. candidate >= 300 ;
+is ( iv ) ;
+
+
+b: [ 300, 100, 150, 300, /* 200, */  100 ] ;
+linear_program(submatrix(5,A), b, c) ;
+/* Test if omitted inequality constraint holds */
+candidate: %[1] ;
+v: A[5]. candidate <= 200 ;
+is ( v ) ;
