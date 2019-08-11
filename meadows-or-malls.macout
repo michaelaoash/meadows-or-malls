@@ -27,498 +27,481 @@ read and interpret file: #p/home/mash/Desktop/meadows-or-malls/meadows-or-malls.
 (%o10)                                                                                       MR + MD = 150
 (%i11) eq_ge_iv:GD+AD+MD = 300
 (%o11)                                                                                     MD + GD + AD = 300
-(%i12) ineq_ge_iv:GD+AD+MD >= 300
-(%o12)                                                                                    MD + GD + AD >= 300
-(%i13) eq_le_v:AR+MR = 200
-(%o13)                                                                                       MR + AR = 200
-(%i14) ineq_le_v:AR+MR <= 200
-(%o14)                                                                                       MR + AR <= 200
-(%i15) eq_vi:AR+GD = 100
-(%o15)                                                                                       GD + AR = 100
-(%i16) nn_vii:GR = 0
-(%o16)                                                                                           GR = 0
-(%i17) nn_viii:AR = 0
-(%o17)                                                                                           AR = 0
-(%i18) nn_ix:MR = 0
-(%o18)                                                                                           MR = 0
-(%i19) nn_x:GD = 0
-(%o19)                                                                                           GD = 0
-(%i20) nn_xi:AD = 0
-(%o20)                                                                                           AD = 0
-(%i21) nn_xii:MD = 0
-(%o21)                                                                                           MD = 0
-(%i22) X:[GR,AR,MR,GD,AD,MD]
-(%o22)                                                                                  [GR, AR, MR, GD, AD, MD]
-(%i23) for bind1 in [eq_ge_iv,eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do
-           block(for bind2 in [eq_ge_iv,eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do
-                     block(print("************************************************************************************************"),print(bind1,bind2),
-                           print("       ",candidate:linsolve([eq_i,eq_ii,eq_iii,eq_vi,bind1,bind2],X),is(subst(candidate,ineq_ge_iv)),is(subst(candidate,ineq_le_v)),
-                                 nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0),is(nn),subst(candidate,C))))
+(%i12) eq_le_v:AR+MR = 200
+(%o12)                                                                                       MR + AR = 200
+(%i13) eq_vi:AR+GD = 100
+(%o13)                                                                                       GD + AR = 100
+(%i14) nn_vii:GR = 0
+(%o14)                                                                                           GR = 0
+(%i15) nn_viii:AR = 0
+(%o15)                                                                                           AR = 0
+(%i16) nn_ix:MR = 0
+(%o16)                                                                                           MR = 0
+(%i17) nn_x:GD = 0
+(%o17)                                                                                           GD = 0
+(%i18) nn_xi:AD = 0
+(%o18)                                                                                           AD = 0
+(%i19) nn_xii:MD = 0
+(%o19)                                                                                           MD = 0
+(%i20) X:[GR,AR,MR,GD,AD,MD]
+(%o20)                                                                                  [GR, AR, MR, GD, AD, MD]
+(%i21) for bind1 in [eq_ge_iv,eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do
+           block(for bind2 in [eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do
+                     block(print("************************************************************************************************"),
+                           print("[i]",eq_i,"[ii]",eq_ii,"[iii]",eq_iii,"[iv]",GD+AD+MD >= 300,"[v]",AR+MR <= 200,"[vi]",eq_vi),print("binding:",bind1,bind2),
+                           print(candidate:linsolve([eq_i,eq_ii,eq_iii,eq_vi,bind1,bind2],X)),ineq_ge_iv:subst(candidate,GD+AD+MD >= 300),ineq_le_v:subst(candidate,AR+MR <= 200),
+                           ineq_nn_vii:subst(candidate,GR >= 0),ineq_nn_viii:subst(candidate,AR >= 0),ineq_nn_ix:subst(candidate,MR >= 0),ineq_nn_x:subst(candidate,GD >= 0),
+                           ineq_nn_xi:subst(candidate,AD >= 0),ineq_nn_xii:subst(candidate,MD >= 0),
+                           print(is(ineq_ge_iv),is(ineq_le_v),is(ineq_nn_vii),is(ineq_nn_viii),is(ineq_nn_ix),is(ineq_nn_x),is(ineq_nn_xi),is(ineq_nn_xii)),
+                           print(is(subst(candidate,ineq_ge_iv)) and is(subst(candidate,ineq_le_v)) and is(ineq_nn_vii) and is(ineq_nn_viii) and is(ineq_nn_ix) and is(ineq_nn_x) and is(ineq_nn_xi)
+                                                                 and is(ineq_nn_xii)),print(subst(candidate,C))))
 ************************************************************************************************ 
-MD + GD + AD = 300 MD + GD + AD = 300 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD + GD + AD = 300 MR + AR = 200 
+[GR = 50, AR = - 150, MR = 350, GD = 250, AD = 250, MD = - 200] 
+true true true false true true true false 
+false 
+432500 
+************************************************************************************************ 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD + GD + AD = 300 GR = 0 
+[GR = 0, AR = - 200, MR = 450, GD = 300, AD = 300, MD = - 300] 
+true false true false true true true false 
+false 
+455000 
+************************************************************************************************ 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD + GD + AD = 300 AR = 0 
+[GR = 200, AR = 0, MR = 50, GD = 100, AD = 100, MD = 100] 
+true true true true true true true true 
+true 
+365000 
+************************************************************************************************ 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD + GD + AD = 300 MR = 0 
+[GR = 225, AR = 25, MR = 0, GD = 75, AD = 75, MD = 150] 
+true true true true true true true true 
+true 
+353750 
+************************************************************************************************ 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD + GD + AD = 300 GD = 0 
+[GR = 300, AR = 100, MR = - 150, GD = 0, AD = 0, MD = 300] 
+true true true true false true true true 
+false 
+320000 
+************************************************************************************************ 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD + GD + AD = 300 AD = 0 
+[GR = 300, AR = 100, MR = - 150, GD = 0, AD = 0, MD = 300] 
+true true true true false true true true 
+false 
+320000 
+************************************************************************************************ 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD + GD + AD = 300 MD = 0 
+[GR = 150, AR = - 50, MR = 150, GD = 150, AD = 150, MD = 0] 
+true true true false true true true true 
+false 
+387500 
+************************************************************************************************ 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR + AR = 200 MR + AR = 200 
 
 solve: dependent equations eliminated: (6)
-              %r1 + 300       %r1 - 100                         %r1 - 300         %r1 - 300
-        [GR = ---------, AR = ---------, MR = 150 - %r1, GD = - ---------, AD = - ---------, MD = %r1] true unknown 
-                  2               2                                 2                 2
- %r1 + 300            %r1 - 100                                   %r1 - 300              %r1 - 300
-(--------- >= 0) and (--------- >= 0) and (150 - %r1 >= 0) and (- --------- >= 0) and (- --------- >= 0) and (%r1 >= 0) unknown 
-     2                    2                                           2                      2
-25 (%r1 + 300) + 1000 %r1 + 100 (%r1 - 100) - 1250 (%r1 - 300) + 100 (150 - %r1) 
+[GR = 400 - %r1, AR = 200 - %r1, MR = %r1, GD = %r1 - 100, AD = %r1 - 100, MD = 150 - %r1] 
+unknown true unknown unknown unknown unknown unknown unknown 
+unknown 
+100 %r1 + 2500 (%r1 - 100) + 50 (400 - %r1) + 200 (200 - %r1) + 1000 (150 - %r1) 
 ************************************************************************************************ 
-MD + GD + AD = 300 MR + AR = 200 
-        [GR = 50, AR = - 150, MR = 350, GD = 250, AD = 250, MD = - 200] true true (50 >= 0) and (- 150 >= 0) and (350 >= 0) and (250 >= 0) and (250 >= 0) and (- 200 >= 0) unknown 432500 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR + AR = 200 GR = 0 
+[GR = 0, AR = - 200, MR = 400, GD = 300, AD = 300, MD = - 250] 
+true true true false true true true false 
+false 
+500000 
 ************************************************************************************************ 
-MD + GD + AD = 300 GR = 0 
-        [GR = 0, AR = - 200, MR = 450, GD = 300, AD = 300, MD = - 300] true false (0 >= 0) and (- 200 >= 0) and (450 >= 0) and (300 >= 0) and (300 >= 0) and (- 300 >= 0) unknown 455000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR + AR = 200 AR = 0 
+[GR = 200, AR = 0, MR = 200, GD = 100, AD = 100, MD = - 50] 
+false true true true true true true false 
+false 
+230000 
 ************************************************************************************************ 
-MD + GD + AD = 300 AR = 0 
-        [GR = 200, AR = 0, MR = 50, GD = 100, AD = 100, MD = 100] true true (200 >= 0) and (0 >= 0) and (50 >= 0) and (100 >= 0) and (100 >= 0) and (100 >= 0) unknown 365000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR + AR = 200 MR = 0 
+[GR = 400, AR = 200, MR = 0, GD = - 100, AD = - 100, MD = 150] 
+false true true true true false false true 
+false 
+- 40000 
 ************************************************************************************************ 
-MD + GD + AD = 300 MR = 0 
-        [GR = 225, AR = 25, MR = 0, GD = 75, AD = 75, MD = 150] true true (225 >= 0) and (25 >= 0) and (0 >= 0) and (75 >= 0) and (75 >= 0) and (150 >= 0) unknown 353750 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR + AR = 200 GD = 0 
+[GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] 
+false true true true true true true true 
+false 
+95000 
 ************************************************************************************************ 
-MD + GD + AD = 300 GD = 0 
-        [GR = 300, AR = 100, MR = - 150, GD = 0, AD = 0, MD = 300] true true (300 >= 0) and (100 >= 0) and (- 150 >= 0) and (0 >= 0) and (0 >= 0) and (300 >= 0) unknown 320000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR + AR = 200 AD = 0 
+[GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] 
+false true true true true true true true 
+false 
+95000 
 ************************************************************************************************ 
-MD + GD + AD = 300 AD = 0 
-        [GR = 300, AR = 100, MR = - 150, GD = 0, AD = 0, MD = 300] true true (300 >= 0) and (100 >= 0) and (- 150 >= 0) and (0 >= 0) and (0 >= 0) and (300 >= 0) unknown 320000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR + AR = 200 MD = 0 
+[GR = 250, AR = 50, MR = 150, GD = 50, AD = 50, MD = 0] 
+false true true true true true true true 
+false 
+162500 
 ************************************************************************************************ 
-MD + GD + AD = 300 MD = 0 
-        [GR = 150, AR = - 50, MR = 150, GD = 150, AD = 150, MD = 0] true true (150 >= 0) and (- 50 >= 0) and (150 >= 0) and (150 >= 0) and (150 >= 0) and (0 >= 0) unknown 387500 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GR = 0 MR + AR = 200 
+[GR = 0, AR = - 200, MR = 400, GD = 300, AD = 300, MD = - 250] 
+true true true false true true true false 
+false 
+500000 
 ************************************************************************************************ 
-MR + AR = 200 MD + GD + AD = 300 
-        [GR = 50, AR = - 150, MR = 350, GD = 250, AD = 250, MD = - 200] true true (50 >= 0) and (- 150 >= 0) and (350 >= 0) and (250 >= 0) and (250 >= 0) and (- 200 >= 0) unknown 432500 
-************************************************************************************************ 
-MR + AR = 200 MR + AR = 200 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GR = 0 GR = 0 
 
 solve: dependent equations eliminated: (6)
-        [GR = 400 - %r2, AR = 200 - %r2, MR = %r2, GD = %r2 - 100, AD = %r2 - 100, MD = 150 - %r2] unknown true 
-(400 - %r2 >= 0) and (200 - %r2 >= 0) and (%r2 >= 0) and (%r2 - 100 >= 0) and (%r2 - 100 >= 0) and (150 - %r2 >= 0) unknown 
-100 %r2 + 2500 (%r2 - 100) + 50 (400 - %r2) + 200 (200 - %r2) + 1000 (150 - %r2) 
+[GR = 0, AR = - 200, MR = 150 - %r2, GD = 300, AD = 300, MD = %r2] 
+unknown unknown true false unknown true true unknown 
+false 
+1000 %r2 + 100 (150 - %r2) + 710000 
 ************************************************************************************************ 
-MR + AR = 200 GR = 0 
-        [GR = 0, AR = - 200, MR = 400, GD = 300, AD = 300, MD = - 250] true true (0 >= 0) and (- 200 >= 0) and (400 >= 0) and (300 >= 0) and (300 >= 0) and (- 250 >= 0) unknown 500000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GR = 0 AR = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-MR + AR = 200 AR = 0 
-        [GR = 200, AR = 0, MR = 200, GD = 100, AD = 100, MD = - 50] false true (200 >= 0) and (0 >= 0) and (200 >= 0) and (100 >= 0) and (100 >= 0) and (- 50 >= 0) unknown 230000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GR = 0 MR = 0 
+[GR = 0, AR = - 200, MR = 0, GD = 300, AD = 300, MD = 150] 
+true true true false true true true true 
+false 
+860000 
 ************************************************************************************************ 
-MR + AR = 200 MR = 0 
-        [GR = 400, AR = 200, MR = 0, GD = - 100, AD = - 100, MD = 150] false true (400 >= 0) and (200 >= 0) and (0 >= 0) and (- 100 >= 0) and (- 100 >= 0) and (150 >= 0) unknown - 40000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GR = 0 GD = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-MR + AR = 200 GD = 0 
-        [GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] false true (300 >= 0) and (100 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (50 >= 0) unknown 95000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GR = 0 AD = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-MR + AR = 200 AD = 0 
-        [GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] false true (300 >= 0) and (100 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (50 >= 0) unknown 95000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GR = 0 MD = 0 
+[GR = 0, AR = - 200, MR = 150, GD = 300, AD = 300, MD = 0] 
+true true true false true true true true 
+false 
+725000 
 ************************************************************************************************ 
-MR + AR = 200 MD = 0 
-        [GR = 250, AR = 50, MR = 150, GD = 50, AD = 50, MD = 0] false true (250 >= 0) and (50 >= 0) and (150 >= 0) and (50 >= 0) and (50 >= 0) and (0 >= 0) unknown 162500 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AR = 0 MR + AR = 200 
+[GR = 200, AR = 0, MR = 200, GD = 100, AD = 100, MD = - 50] 
+false true true true true true true false 
+false 
+230000 
 ************************************************************************************************ 
-GR = 0 MD + GD + AD = 300 
-        [GR = 0, AR = - 200, MR = 450, GD = 300, AD = 300, MD = - 300] true false (0 >= 0) and (- 200 >= 0) and (450 >= 0) and (300 >= 0) and (300 >= 0) and (- 300 >= 0) unknown 455000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AR = 0 GR = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-GR = 0 MR + AR = 200 
-        [GR = 0, AR = - 200, MR = 400, GD = 300, AD = 300, MD = - 250] true true (0 >= 0) and (- 200 >= 0) and (400 >= 0) and (300 >= 0) and (300 >= 0) and (- 250 >= 0) unknown 500000 
-************************************************************************************************ 
-GR = 0 GR = 0 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AR = 0 AR = 0 
 
 solve: dependent equations eliminated: (6)
-        [GR = 0, AR = - 200, MR = 150 - %r3, GD = 300, AD = 300, MD = %r3] unknown unknown (0 >= 0) and (- 200 >= 0) and (150 - %r3 >= 0) and (300 >= 0) and (300 >= 0) and (%r3 >= 0) unknown 
-                                                                                                                                                                    1000 %r3 + 100 (150 - %r3) + 710000 
+[GR = 200, AR = 0, MR = 150 - %r3, GD = 100, AD = 100, MD = %r3] 
+unknown unknown true true unknown true true unknown 
+unknown 
+1000 %r3 + 100 (150 - %r3) + 260000 
 ************************************************************************************************ 
-GR = 0 AR = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AR = 0 MR = 0 
+[GR = 200, AR = 0, MR = 0, GD = 100, AD = 100, MD = 150] 
+true true true true true true true true 
+true 
+410000 
 ************************************************************************************************ 
-GR = 0 MR = 0 
-        [GR = 0, AR = - 200, MR = 0, GD = 300, AD = 300, MD = 150] true true (0 >= 0) and (- 200 >= 0) and (0 >= 0) and (300 >= 0) and (300 >= 0) and (150 >= 0) unknown 860000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AR = 0 GD = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-GR = 0 GD = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AR = 0 AD = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-GR = 0 AD = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AR = 0 MD = 0 
+[GR = 200, AR = 0, MR = 150, GD = 100, AD = 100, MD = 0] 
+false true true true true true true true 
+false 
+275000 
 ************************************************************************************************ 
-GR = 0 MD = 0 
-        [GR = 0, AR = - 200, MR = 150, GD = 300, AD = 300, MD = 0] true true (0 >= 0) and (- 200 >= 0) and (150 >= 0) and (300 >= 0) and (300 >= 0) and (0 >= 0) unknown 725000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR = 0 MR + AR = 200 
+[GR = 400, AR = 200, MR = 0, GD = - 100, AD = - 100, MD = 150] 
+false true true true true false false true 
+false 
+- 40000 
 ************************************************************************************************ 
-AR = 0 MD + GD + AD = 300 
-        [GR = 200, AR = 0, MR = 50, GD = 100, AD = 100, MD = 100] true true (200 >= 0) and (0 >= 0) and (50 >= 0) and (100 >= 0) and (100 >= 0) and (100 >= 0) unknown 365000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR = 0 GR = 0 
+[GR = 0, AR = - 200, MR = 0, GD = 300, AD = 300, MD = 150] 
+true true true false true true true true 
+false 
+860000 
 ************************************************************************************************ 
-AR = 0 MR + AR = 200 
-        [GR = 200, AR = 0, MR = 200, GD = 100, AD = 100, MD = - 50] false true (200 >= 0) and (0 >= 0) and (200 >= 0) and (100 >= 0) and (100 >= 0) and (- 50 >= 0) unknown 230000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR = 0 AR = 0 
+[GR = 200, AR = 0, MR = 0, GD = 100, AD = 100, MD = 150] 
+true true true true true true true true 
+true 
+410000 
 ************************************************************************************************ 
-AR = 0 GR = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
-************************************************************************************************ 
-AR = 0 AR = 0 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR = 0 MR = 0 
 
 solve: dependent equations eliminated: (6)
-        [GR = 200, AR = 0, MR = 150 - %r4, GD = 100, AD = 100, MD = %r4] unknown unknown (200 >= 0) and (0 >= 0) and (150 - %r4 >= 0) and (100 >= 0) and (100 >= 0) and (%r4 >= 0) unknown 
-                                                                                                                                                                    1000 %r4 + 100 (150 - %r4) + 260000 
+[GR = 300 - %r4, AR = 100 - %r4, MR = 0, GD = %r4, AD = %r4, MD = 150] 
+unknown unknown unknown unknown true unknown unknown true 
+unknown 
+2500 %r4 + 50 (300 - %r4) + 200 (100 - %r4) + 150000 
 ************************************************************************************************ 
-AR = 0 MR = 0 
-        [GR = 200, AR = 0, MR = 0, GD = 100, AD = 100, MD = 150] true true (200 >= 0) and (0 >= 0) and (0 >= 0) and (100 >= 0) and (100 >= 0) and (150 >= 0) unknown 410000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR = 0 GD = 0 
+[GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] 
+false true true true true true true true 
+false 
+185000 
 ************************************************************************************************ 
-AR = 0 GD = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR = 0 AD = 0 
+[GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] 
+false true true true true true true true 
+false 
+185000 
 ************************************************************************************************ 
-AR = 0 AD = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MR = 0 MD = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-AR = 0 MD = 0 
-        [GR = 200, AR = 0, MR = 150, GD = 100, AD = 100, MD = 0] false true (200 >= 0) and (0 >= 0) and (150 >= 0) and (100 >= 0) and (100 >= 0) and (0 >= 0) unknown 275000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GD = 0 MR + AR = 200 
+[GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] 
+false true true true true true true true 
+false 
+95000 
 ************************************************************************************************ 
-MR = 0 MD + GD + AD = 300 
-        [GR = 225, AR = 25, MR = 0, GD = 75, AD = 75, MD = 150] true true (225 >= 0) and (25 >= 0) and (0 >= 0) and (75 >= 0) and (75 >= 0) and (150 >= 0) unknown 353750 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GD = 0 GR = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-MR = 0 MR + AR = 200 
-        [GR = 400, AR = 200, MR = 0, GD = - 100, AD = - 100, MD = 150] false true (400 >= 0) and (200 >= 0) and (0 >= 0) and (- 100 >= 0) and (- 100 >= 0) and (150 >= 0) unknown - 40000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GD = 0 AR = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-MR = 0 GR = 0 
-        [GR = 0, AR = - 200, MR = 0, GD = 300, AD = 300, MD = 150] true true (0 >= 0) and (- 200 >= 0) and (0 >= 0) and (300 >= 0) and (300 >= 0) and (150 >= 0) unknown 860000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GD = 0 MR = 0 
+[GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] 
+false true true true true true true true 
+false 
+185000 
 ************************************************************************************************ 
-MR = 0 AR = 0 
-        [GR = 200, AR = 0, MR = 0, GD = 100, AD = 100, MD = 150] true true (200 >= 0) and (0 >= 0) and (0 >= 0) and (100 >= 0) and (100 >= 0) and (150 >= 0) unknown 410000 
-************************************************************************************************ 
-MR = 0 MR = 0 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GD = 0 GD = 0 
 
 solve: dependent equations eliminated: (6)
-        [GR = 300 - %r5, AR = 100 - %r5, MR = 0, GD = %r5, AD = %r5, MD = 150] unknown unknown (300 - %r5 >= 0) and (100 - %r5 >= 0) and (0 >= 0) and (%r5 >= 0) and (%r5 >= 0) and (150 >= 0) unknown 
-                                                                                                                                                   2500 %r5 + 50 (300 - %r5) + 200 (100 - %r5) + 150000 
+[GR = 300, AR = 100, MR = 150 - %r5, GD = 0, AD = 0, MD = %r5] 
+unknown unknown true true unknown true true unknown 
+unknown 
+1000 %r5 + 100 (150 - %r5) + 35000 
 ************************************************************************************************ 
-MR = 0 GD = 0 
-        [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] false true (300 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) and (150 >= 0) unknown 185000 
-************************************************************************************************ 
-MR = 0 AD = 0 
-        [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] false true (300 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) and (150 >= 0) unknown 185000 
-************************************************************************************************ 
-MR = 0 MD = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
-************************************************************************************************ 
-GD = 0 MD + GD + AD = 300 
-        [GR = 300, AR = 100, MR = - 150, GD = 0, AD = 0, MD = 300] true true (300 >= 0) and (100 >= 0) and (- 150 >= 0) and (0 >= 0) and (0 >= 0) and (300 >= 0) unknown 320000 
-************************************************************************************************ 
-GD = 0 MR + AR = 200 
-        [GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] false true (300 >= 0) and (100 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (50 >= 0) unknown 95000 
-************************************************************************************************ 
-GD = 0 GR = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
-************************************************************************************************ 
-GD = 0 AR = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
-************************************************************************************************ 
-GD = 0 MR = 0 
-        [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] false true (300 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) and (150 >= 0) unknown 185000 
-************************************************************************************************ 
-GD = 0 GD = 0 
-
-solve: dependent equations eliminated: (6)
-        [GR = 300, AR = 100, MR = 150 - %r6, GD = 0, AD = 0, MD = %r6] unknown unknown (300 >= 0) and (100 >= 0) and (150 - %r6 >= 0) and (0 >= 0) and (0 >= 0) and (%r6 >= 0) unknown 
-                                                                                                                                                                     1000 %r6 + 100 (150 - %r6) + 35000 
-************************************************************************************************ 
-GD = 0 AD = 0 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GD = 0 AD = 0 
 
 solve: dependent equations eliminated: (2)
-        [GR = 300, AR = 100, MR = 150 - %r7, GD = 0, AD = 0, MD = %r7] unknown unknown (300 >= 0) and (100 >= 0) and (150 - %r7 >= 0) and (0 >= 0) and (0 >= 0) and (%r7 >= 0) unknown 
-                                                                                                                                                                     1000 %r7 + 100 (150 - %r7) + 35000 
+[GR = 300, AR = 100, MR = 150 - %r6, GD = 0, AD = 0, MD = %r6] 
+unknown unknown true true unknown true true unknown 
+unknown 
+1000 %r6 + 100 (150 - %r6) + 35000 
 ************************************************************************************************ 
-GD = 0 MD = 0 
-        [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] false false (300 >= 0) and (100 >= 0) and (150 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) unknown 50000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: GD = 0 MD = 0 
+[GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] 
+false false true true true true true true 
+false 
+50000 
 ************************************************************************************************ 
-AD = 0 MD + GD + AD = 300 
-        [GR = 300, AR = 100, MR = - 150, GD = 0, AD = 0, MD = 300] true true (300 >= 0) and (100 >= 0) and (- 150 >= 0) and (0 >= 0) and (0 >= 0) and (300 >= 0) unknown 320000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AD = 0 MR + AR = 200 
+[GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] 
+false true true true true true true true 
+false 
+95000 
 ************************************************************************************************ 
-AD = 0 MR + AR = 200 
-        [GR = 300, AR = 100, MR = 100, GD = 0, AD = 0, MD = 50] false true (300 >= 0) and (100 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (50 >= 0) unknown 95000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AD = 0 GR = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-AD = 0 GR = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AD = 0 AR = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-AD = 0 AR = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AD = 0 MR = 0 
+[GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] 
+false true true true true true true true 
+false 
+185000 
 ************************************************************************************************ 
-AD = 0 MR = 0 
-        [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150] false true (300 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) and (150 >= 0) unknown 185000 
-************************************************************************************************ 
-AD = 0 GD = 0 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AD = 0 GD = 0 
 
 solve: dependent equations eliminated: (2)
-        [GR = 300, AR = 100, MR = 150 - %r8, GD = 0, AD = 0, MD = %r8] unknown unknown (300 >= 0) and (100 >= 0) and (150 - %r8 >= 0) and (0 >= 0) and (0 >= 0) and (%r8 >= 0) unknown 
-                                                                                                                                                                     1000 %r8 + 100 (150 - %r8) + 35000 
+[GR = 300, AR = 100, MR = 150 - %r7, GD = 0, AD = 0, MD = %r7] 
+unknown unknown true true unknown true true unknown 
+unknown 
+1000 %r7 + 100 (150 - %r7) + 35000 
 ************************************************************************************************ 
-AD = 0 AD = 0 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AD = 0 AD = 0 
 
 solve: dependent equations eliminated: (6)
-        [GR = 300, AR = 100, MR = 150 - %r9, GD = 0, AD = 0, MD = %r9] unknown unknown (300 >= 0) and (100 >= 0) and (150 - %r9 >= 0) and (0 >= 0) and (0 >= 0) and (%r9 >= 0) unknown 
-                                                                                                                                                                     1000 %r9 + 100 (150 - %r9) + 35000 
+[GR = 300, AR = 100, MR = 150 - %r8, GD = 0, AD = 0, MD = %r8] 
+unknown unknown true true unknown true true unknown 
+unknown 
+1000 %r8 + 100 (150 - %r8) + 35000 
 ************************************************************************************************ 
-AD = 0 MD = 0 
-        [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] false false (300 >= 0) and (100 >= 0) and (150 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) unknown 50000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: AD = 0 MD = 0 
+[GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] 
+false false true true true true true true 
+false 
+50000 
 ************************************************************************************************ 
-MD = 0 MD + GD + AD = 300 
-        [GR = 150, AR = - 50, MR = 150, GD = 150, AD = 150, MD = 0] true true (150 >= 0) and (- 50 >= 0) and (150 >= 0) and (150 >= 0) and (150 >= 0) and (0 >= 0) unknown 387500 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD = 0 MR + AR = 200 
+[GR = 250, AR = 50, MR = 150, GD = 50, AD = 50, MD = 0] 
+false true true true true true true true 
+false 
+162500 
 ************************************************************************************************ 
-MD = 0 MR + AR = 200 
-        [GR = 250, AR = 50, MR = 150, GD = 50, AD = 50, MD = 0] false true (250 >= 0) and (50 >= 0) and (150 >= 0) and (50 >= 0) and (50 >= 0) and (0 >= 0) unknown 162500 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD = 0 GR = 0 
+[GR = 0, AR = - 200, MR = 150, GD = 300, AD = 300, MD = 0] 
+true true true false true true true true 
+false 
+725000 
 ************************************************************************************************ 
-MD = 0 GR = 0 
-        [GR = 0, AR = - 200, MR = 150, GD = 300, AD = 300, MD = 0] true true (0 >= 0) and (- 200 >= 0) and (150 >= 0) and (300 >= 0) and (300 >= 0) and (0 >= 0) unknown 725000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD = 0 AR = 0 
+[GR = 200, AR = 0, MR = 150, GD = 100, AD = 100, MD = 0] 
+false true true true true true true true 
+false 
+275000 
 ************************************************************************************************ 
-MD = 0 AR = 0 
-        [GR = 200, AR = 0, MR = 150, GD = 100, AD = 100, MD = 0] false true (200 >= 0) and (0 >= 0) and (150 >= 0) and (100 >= 0) and (100 >= 0) and (0 >= 0) unknown 275000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD = 0 MR = 0 
+[] 
+unknown unknown unknown unknown unknown unknown unknown unknown 
+unknown 
+100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
 ************************************************************************************************ 
-MD = 0 MR = 0 
-        [] unknown unknown (GR >= 0) and (AR >= 0) and (MR >= 0) and (GD >= 0) and (AD >= 0) and (MD >= 0) unknown 100 MR + 1000 MD + 50 GR + 500 GD + 200 AR + 2000 AD 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD = 0 GD = 0 
+[GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] 
+false false true true true true true true 
+false 
+50000 
 ************************************************************************************************ 
-MD = 0 GD = 0 
-        [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] false false (300 >= 0) and (100 >= 0) and (150 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) unknown 50000 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD = 0 AD = 0 
+[GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] 
+false false true true true true true true 
+false 
+50000 
 ************************************************************************************************ 
-MD = 0 AD = 0 
-        [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0] false false (300 >= 0) and (100 >= 0) and (150 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) unknown 50000 
-************************************************************************************************ 
-MD = 0 MD = 0 
+[i] GR + GD = 300 [ii] AR + AD = 100 [iii] MR + MD = 150 [iv] MD + GD + AD >= 300 [v] MR + AR <= 200 [vi] GD + AR = 100 
+binding: MD = 0 MD = 0 
 
 solve: dependent equations eliminated: (6)
-        [GR = %r10, AR = %r10 - 200, MR = 150, GD = 300 - %r10, AD = 300 - %r10, MD = 0] unknown unknown 
-                               (%r10 >= 0) and (%r10 - 200 >= 0) and (150 >= 0) and (300 - %r10 >= 0) and (300 - %r10 >= 0) and (0 >= 0) unknown 50 %r10 + 200 (%r10 - 200) + 2500 (300 - %r10) + 15000 
-(%o23)                                                                                            done
-(%i24) print("********************************************************************************")
-******************************************************************************** 
-(%i25) linsolve([eq_i,eq_ii,eq_iii,eq_vi,eq_ge_iv,nn_ix],X)
-(%o25)                                                                  [GR = 225, AR = 25, MR = 0, GD = 75, AD = 75, MD = 150]
-(%i26) candidate:%
-(%o26)                                                                  [GR = 225, AR = 25, MR = 0, GD = 75, AD = 75, MD = 150]
-(%i27) subst(candidate,C)
-(%o27)                                                                                           353750
-(%i28) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o28)                                                      (225 >= 0) and (25 >= 0) and (0 >= 0) and (75 >= 0) and (75 >= 0) and (150 >= 0)
-(%i29) is(ev(nn))
-(%o29)                                                                                            true
-(%i30) iv:subst(candidate,ineq_ge_iv)
-(%o30)                                                                                         300 >= 300
-(%i31) is(iv)
-(%o31)                                                                                            true
-(%i32) v:subst(candidate,ineq_le_v)
-(%o32)                                                                                         25 <= 200
-(%i33) is(v)
-(%o33)                                                                                            true
-(%i34) is(ev(nn) and ev(iv) and ev(v))
-(%o34)                                                                                            true
-(%i35) print("********************************************************************************")
-******************************************************************************** 
-(%i36) linsolve([eq_i,eq_ii,eq_iii,eq_vi,eq_ge_iv,nn_xii],X)
-(%o36)                                                                [GR = 150, AR = - 50, MR = 150, GD = 150, AD = 150, MD = 0]
-(%i37) candidate:%
-(%o37)                                                                [GR = 150, AR = - 50, MR = 150, GD = 150, AD = 150, MD = 0]
-(%i38) subst(candidate,C)
-(%o38)                                                                                           387500
-(%i39) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o39)                                                    (150 >= 0) and (- 50 >= 0) and (150 >= 0) and (150 >= 0) and (150 >= 0) and (0 >= 0)
-(%i40) is(ev(nn))
-(%o40)                                                                                           false
-(%i41) iv:subst(candidate,ineq_ge_iv)
-(%o41)                                                                                         300 >= 300
-(%i42) is(iv)
-(%o42)                                                                                            true
-(%i43) v:subst(candidate,ineq_le_v)
-(%o43)                                                                                         100 <= 200
-(%i44) is(v)
-(%o44)                                                                                            true
-(%i45) is(ev(nn) and ev(iv) and ev(v))
-(%o45)                                                                                           false
-(%i46) print("********************************************************************************")
-******************************************************************************** 
-(%i47) linsolve([eq_i,eq_ii,eq_iii,eq_vi,nn_viii,nn_xii],X)
-(%o47)                                                                  [GR = 200, AR = 0, MR = 150, GD = 100, AD = 100, MD = 0]
-(%i48) candidate:%
-(%o48)                                                                  [GR = 200, AR = 0, MR = 150, GD = 100, AD = 100, MD = 0]
-(%i49) subst(candidate,C)
-(%o49)                                                                                           275000
-(%i50) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o50)                                                     (200 >= 0) and (0 >= 0) and (150 >= 0) and (100 >= 0) and (100 >= 0) and (0 >= 0)
-(%i51) is(ev(nn))
-(%o51)                                                                                            true
-(%i52) iv:subst(candidate,ineq_ge_iv)
-(%o52)                                                                                         200 >= 300
-(%i53) is(iv)
-(%o53)                                                                                           false
-(%i54) v:subst(candidate,ineq_le_v)
-(%o54)                                                                                         150 <= 200
-(%i55) is(v)
-(%o55)                                                                                            true
-(%i56) is(ev(nn) and ev(iv) and ev(v))
-(%o56)                                                                                           false
-(%i57) print("********************************************************************************")
-******************************************************************************** 
-(%i58) linsolve([eq_i,eq_ii,eq_iii,eq_vi,nn_viii,nn_ix],X)
-(%o58)                                                                  [GR = 200, AR = 0, MR = 0, GD = 100, AD = 100, MD = 150]
-(%i59) candidate:%
-(%o59)                                                                  [GR = 200, AR = 0, MR = 0, GD = 100, AD = 100, MD = 150]
-(%i60) subst(candidate,C)
-(%o60)                                                                                           410000
-(%i61) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o61)                                                     (200 >= 0) and (0 >= 0) and (0 >= 0) and (100 >= 0) and (100 >= 0) and (150 >= 0)
-(%i62) is(ev(nn))
-(%o62)                                                                                            true
-(%i63) iv:subst(candidate,ineq_ge_iv)
-(%o63)                                                                                         350 >= 300
-(%i64) is(iv)
-(%o64)                                                                                            true
-(%i65) v:subst(candidate,ineq_le_v)
-(%o65)                                                                                          0 <= 200
-(%i66) is(v)
-(%o66)                                                                                            true
-(%i67) is(ev(nn) and ev(iv) and ev(v))
-(%o67)                                                                                            true
-(%i68) print("********************************************************************************")
-******************************************************************************** 
-(%i69) linsolve([eq_i,eq_ii,eq_iii,eq_vi,nn_ix,nn_x],X)
-(%o69)                                                                   [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150]
-(%i70) candidate:%
-(%o70)                                                                   [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150]
-(%i71) subst(candidate,C)
-(%o71)                                                                                           185000
-(%i72) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o72)                                                      (300 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) and (150 >= 0)
-(%i73) is(ev(nn))
-(%o73)                                                                                            true
-(%i74) iv:subst(candidate,ineq_ge_iv)
-(%o74)                                                                                         150 >= 300
-(%i75) is(iv)
-(%o75)                                                                                           false
-(%i76) v:subst(candidate,ineq_le_v)
-(%o76)                                                                                         100 <= 200
-(%i77) is(v)
-(%o77)                                                                                            true
-(%i78) is(ev(nn) and ev(iv) and ev(v))
-(%o78)                                                                                           false
-(%i79) print("********************************************************************************")
-******************************************************************************** 
-(%i80) linsolve([eq_i,eq_ii,eq_iii,eq_vi,nn_ix,nn_xi],X)
-(%o80)                                                                   [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150]
-(%i81) candidate:%
-(%o81)                                                                   [GR = 300, AR = 100, MR = 0, GD = 0, AD = 0, MD = 150]
-(%i82) subst(candidate,C)
-(%o82)                                                                                           185000
-(%i83) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o83)                                                      (300 >= 0) and (100 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0) and (150 >= 0)
-(%i84) is(ev(nn))
-(%o84)                                                                                            true
-(%i85) iv:subst(candidate,ineq_ge_iv)
-(%o85)                                                                                         150 >= 300
-(%i86) is(iv)
-(%o86)                                                                                           false
-(%i87) v:subst(candidate,ineq_le_v)
-(%o87)                                                                                         100 <= 200
-(%i88) is(v)
-(%o88)                                                                                            true
-(%i89) is(ev(nn) and ev(iv) and ev(v))
-(%o89)                                                                                           false
-(%i90) print("********************************************************************************")
-******************************************************************************** 
-(%i91) linsolve([eq_i,eq_ii,eq_iii,eq_vi,nn_x,nn_xii],X)
-(%o91)                                                                   [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0]
-(%i92) candidate:%
-(%o92)                                                                   [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0]
-(%i93) subst(candidate,C)
-(%o93)                                                                                           50000
-(%i94) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o94)                                                      (300 >= 0) and (100 >= 0) and (150 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0)
-(%i95) is(ev(nn))
-(%o95)                                                                                            true
-(%i96) iv:subst(candidate,ineq_ge_iv)
-(%o96)                                                                                          0 >= 300
-(%i97) is(iv)
-(%o97)                                                                                           false
-(%i98) v:subst(candidate,ineq_le_v)
-(%o98)                                                                                         250 <= 200
-(%i99) is(v)
-(%o99)                                                                                           false
-(%i100) is(ev(nn) and ev(iv) and ev(v))
-(%o100)                                                                                          false
-(%i101) print("********************************************************************************")
-******************************************************************************** 
-(%i102) linsolve([eq_i,eq_ii,eq_iii,eq_vi,nn_xi,nn_xii],X)
-(%o102)                                                                  [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0]
-(%i103) candidate:%
-(%o103)                                                                  [GR = 300, AR = 100, MR = 150, GD = 0, AD = 0, MD = 0]
-(%i104) subst(candidate,C)
-(%o104)                                                                                          50000
-(%i105) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o105)                                                     (300 >= 0) and (100 >= 0) and (150 >= 0) and (0 >= 0) and (0 >= 0) and (0 >= 0)
-(%i106) is(ev(nn))
-(%o106)                                                                                           true
-(%i107) iv:subst(candidate,ineq_ge_iv)
-(%o107)                                                                                         0 >= 300
-(%i108) is(iv)
-(%o108)                                                                                          false
-(%i109) v:subst(candidate,ineq_le_v)
-(%o109)                                                                                        250 <= 200
-(%i110) is(v)
-(%o110)                                                                                          false
-(%i111) is(ev(nn) and ev(iv) and ev(v))
-(%o111)                                                                                          false
-(%i112) print("********************************************************************************")
-******************************************************************************** 
-(%i113) linsolve([eq_i,eq_ii,eq_iii,eq_vi,nn_x,nn_xi],X)
-
-solve: dependent equations eliminated: (2)
-(%o113)                                                             [GR = 300, AR = 100, MR = 150 - %r11, GD = 0, AD = 0, MD = %r11]
-(%i114) candidate:%
-(%o114)                                                             [GR = 300, AR = 100, MR = 150 - %r11, GD = 0, AD = 0, MD = %r11]
-(%i115) subst(candidate,C)
-(%o115)                                                                           1000 %r11 + 100 (150 - %r11) + 35000
-(%i116) nn:subst(candidate,GR >= 0 and AR >= 0 and MR >= 0 and GD >= 0 and AD >= 0 and MD >= 0)
-(%o116)                                                (300 >= 0) and (100 >= 0) and (150 - %r11 >= 0) and (0 >= 0) and (0 >= 0) and (%r11 >= 0)
-(%i117) is(ev(nn))
-(%o117)                                                                                         unknown
-(%i118) iv:subst(candidate,ineq_ge_iv)
-(%o118)                                                                                       %r11 >= 300
-(%i119) is(iv)
-(%o119)                                                                                         unknown
-(%i120) v:subst(candidate,ineq_le_v)
-(%o120)                                                                                    250 - %r11 <= 200
-(%i121) is(v)
-(%o121)                                                                                         unknown
-(%i122) is(ev(nn) and ev(iv) and ev(v))
-(%o122)                                                                                         unknown
-(%i123) load(simplex)
-(%o123)                                                                    /usr/share/maxima/5.41.0/share/simplex/simplex.mac
-(%i124) ev(minimize_lp(C,[eq_i,eq_ii,eq_iii,ineq_ge_iv,ineq_le_v,eq_vi]),nonegative_lp = true)
-(%o124)                                                            [353750, [MR = 0, MD = 150, AR = 25, AD = 75, GR = 225, GD = 75]]
-(%i125) c:[50,200,100,500,2000,1000]
-(%o125)                                                                             [50, 200, 100, 500, 2000, 1000]
-(%i126) A:matrix([1,0,0,1,0,0],[0,1,0,0,1,0],[0,0,1,0,0,1],[0,0,0,1,1,1],[0,1,1,0,0,0],[0,1,0,1,0,0])
+[GR = %r9, AR = %r9 - 200, MR = 150, GD = 300 - %r9, AD = 300 - %r9, MD = 0] 
+unknown unknown unknown unknown true unknown unknown true 
+unknown 
+50 %r9 + 200 (%r9 - 200) + 2500 (300 - %r9) + 15000 
+(%o21)                                                                                            done
+(%i22) load(simplex)
+(%o22)                                                                     /usr/share/maxima/5.41.0/share/simplex/simplex.mac
+(%i23) ev(minimize_lp(C,[eq_i,eq_ii,eq_iii,ineq_ge_iv,ineq_le_v,eq_vi]),nonegative_lp = true)
+(%o23)                                                         [50000, [%r9 = 150, MR = 150, MD = 0, AR = 100, AD = 0, GR = 300, GD = 0]]
+(%i24) c:[50,200,100,500,2000,1000]
+(%o24)                                                                              [50, 200, 100, 500, 2000, 1000]
+(%i25) A:matrix([1,0,0,1,0,0],[0,1,0,0,1,0],[0,0,1,0,0,1],[0,0,0,1,1,1],[0,1,1,0,0,0],[0,1,0,1,0,0])
                                                                                           [ 1  0  0  1  0  0 ]
                                                                                           [                  ]
                                                                                           [ 0  1  0  0  1  0 ]
                                                                                           [                  ]
                                                                                           [ 0  0  1  0  0  1 ]
-(%o126)                                                                                   [                  ]
+(%o25)                                                                                    [                  ]
                                                                                           [ 0  0  0  1  1  1 ]
                                                                                           [                  ]
                                                                                           [ 0  1  1  0  0  0 ]
                                                                                           [                  ]
                                                                                           [ 0  1  0  1  0  0 ]
-(%i127) b:[300,100,150,200,100]
-(%o127)                                                                                [300, 100, 150, 200, 100]
-(%i128) linear_program(submatrix(4,A),b,c)
-(%o128)                                                                            [[300, 100, 100, 0, 0, 50], 95000]
-(%i129) candidate:%[1]
-(%o129)                                                                                [300, 100, 100, 0, 0, 50]
-(%i130) iv:A[4] . candidate >= 300
-(%o130)                                                                                        50 >= 300
-(%i131) is(iv)
-(%o131)                                                                                          false
-(%i132) b:[300,100,150,300,100]
-(%o132)                                                                                [300, 100, 150, 300, 100]
-(%i133) linear_program(submatrix(5,A),b,c)
-(%o133)                                                                           [[225, 25, 0, 75, 75, 150], 353750]
-(%i134) candidate:%[1]
-(%o134)                                                                                [225, 25, 0, 75, 75, 150]
-(%i135) v:A[5] . candidate <= 200
-(%o135)                                                                                        25 <= 200
-(%i136) is(v)
-(%o136)                                                                                           true
-(%o136)                                                                                   meadows-or-malls.mac
+(%i26) b:[300,100,150,200,100]
+(%o26)                                                                                 [300, 100, 150, 200, 100]
+(%i27) linear_program(submatrix(4,A),b,c)
+(%o27)                                                                             [[300, 100, 100, 0, 0, 50], 95000]
+(%i28) candidate:%[1]
+(%o28)                                                                                 [300, 100, 100, 0, 0, 50]
+(%i29) iv:A[4] . candidate >= 300
+(%o29)                                                                                         50 >= 300
+(%i30) is(iv)
+(%o30)                                                                                           false
+(%i31) b:[300,100,150,300,100]
+(%o31)                                                                                 [300, 100, 150, 300, 100]
+(%i32) linear_program(submatrix(5,A),b,c)
+(%o32)                                                                            [[225, 25, 0, 75, 75, 150], 353750]
+(%i33) candidate:%[1]
+(%o33)                                                                                 [225, 25, 0, 75, 75, 150]
+(%i34) v:A[5] . candidate <= 200
+(%o34)                                                                                         25 <= 200
+(%i35) is(v)
+(%o35)                                                                                            true
+(%o35)                                                                                    meadows-or-malls.mac

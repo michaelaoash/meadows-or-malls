@@ -18,9 +18,7 @@ eq_i       : GR + GD = 300 ;
 eq_ii      : AR + AD = 100 ;
 eq_iii     : MR + MD = 150 ;
 eq_ge_iv   : GD + AD + MD = 300 ;
-ineq_ge_iv : GD + AD + MD >= 300 ;
 eq_le_v    : AR + MR = 200 ;
-ineq_le_v  : AR + MR <= 200 ;
 eq_vi      : AR + GD = 100 ;
 nn_vii     : GR = 0 ;
 nn_viii    : AR = 0 ;
@@ -29,139 +27,27 @@ nn_x       : GD = 0 ;
 nn_xi      : AD = 0 ;
 nn_xii     : MD = 0 ;
 
-nn_ineq_vii     : GR >= 0 ;
-nn_ineq_viii    : AR >= 0 ;
-nn_ineq_ix      : MR >= 0 ;
-nn_ineq_x       : GD >= 0 ;
-nn_ineq_xi      : AD >= 0 ;
-nn_ineq_xii     : MD >= 0 ;
-
 
 
 X : [GR, AR, MR, GD, AD, MD] ;
 
 for bind1 in [eq_ge_iv,eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do block (
-  for bind2 in [eq_ge_iv,eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do block(
+  for bind2 in [eq_le_v,nn_vii,nn_viii,nn_ix,nn_x,nn_xi,nn_xii] do block(
     print("************************************************************************************************"),
-    print(bind1, bind2),
+    print("[i]", eq_i, "[ii]", eq_ii, "[iii]", eq_iii, "[iv]", GD + AD + MD >= 300, "[v]",  AR + MR <= 200, "[vi]", eq_vi),
+    print("binding:", bind1, bind2),
     print(candidate:linsolve([eq_i, eq_ii, eq_iii, eq_vi, bind1, bind2], X )),
-    nn_ineq_vii:subst(candidate, GR>=0),
-    nn_ineq_viii:subst(candidate, AR>=0),
-    nn_ineq_ix: subst(candidate, MR>=0), 
-    nn_ineq_x: subst(candidate, GD>=0), 
-    nn_ineq_xi: subst(candidate, AD>=0),
-    nn_ineq_xii: subst(candidate,MD>=0),
-    print(is(subst(candidate, ineq_ge_iv)),is(subst(candidate, ineq_le_v)),is(nn_ineq_vii),is(nn_ineq_viii),is(nn_ineq_ix),is(nn_ineq_x),is(nn_ineq_xi),is(nn_ineq_xii)),
+    ineq_ge_iv : subst(candidate, GD + AD + MD >= 300),
+    ineq_le_v  : subst(candidate, AR + MR <= 200),
+    ineq_nn_vii:subst(candidate, GR>=0),
+    ineq_nn_viii:subst(candidate, AR>=0),
+    ineq_nn_ix: subst(candidate, MR>=0), 
+    ineq_nn_x: subst(candidate, GD>=0), 
+    ineq_nn_xi: subst(candidate, AD>=0),
+    ineq_nn_xii: subst(candidate,MD>=0),
+    print(is(ineq_ge_iv),is(ineq_le_v),is(ineq_nn_vii),is(ineq_nn_viii),is(ineq_nn_ix),is(ineq_nn_x),is(ineq_nn_xi),is(ineq_nn_xii)),
+    print(is(subst(candidate, ineq_ge_iv)) and is(subst(candidate, ineq_le_v)) and is(ineq_nn_vii) and is(ineq_nn_viii) and is(ineq_nn_ix) and is(ineq_nn_x) and is(ineq_nn_xi) and is(ineq_nn_xii)),
     print(subst(candidate, C))))  ;
-
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, eq_ge_iv, nn_ix], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, eq_ge_iv, nn_xii], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_viii, nn_xii], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_viii, nn_ix], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_ix, nn_x], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_ix, nn_xi], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_x, nn_xii], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_xi, nn_xii], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
-
-print("********************************************************************************")$
-linsolve([eq_i, eq_ii, eq_iii, eq_vi, nn_x, nn_xi], X ) ;
-candidate : % ;
-subst(candidate, C);
-nn: subst(candidate, GR>=0 and AR>=0 and MR>=0 and GD>=0 and AD>=0 and MD>=0) ;
-is(ev(nn)) ;
-iv: subst(candidate, ineq_ge_iv) ;
-is(iv) ;
-v: subst(candidate, ineq_le_v) ;
-is(v) ;
-is(ev(nn) and ev(iv) and ev(v)) ;
 
 
 /* Use built-in LP functions in the simplex package */
@@ -183,7 +69,7 @@ A: matrix(
 [0,1,0,1,0,0] ) ;
 
 b: [ 300, 100, 150, /* 300, */ 200, 100 ] ;
-linear_program(submatrix(4,A), b, c) ;
+linear_program(submatrix(4,A), b, c) ;  /* imposes nonnegativity constraints */
 /* Test if omitted inequality constraint holds */
 candidate: %[1] ;
 iv: A[4]. candidate >= 300 ;
@@ -191,7 +77,7 @@ is ( iv ) ;
 
 
 b: [ 300, 100, 150, 300, /* 200, */  100 ] ;
-linear_program(submatrix(5,A), b, c) ;
+linear_program(submatrix(5,A), b, c) ;  /* imposes nonnegativity constraints */
 /* Test if omitted inequality constraint holds */
 candidate: %[1] ;
 v: A[5]. candidate <= 200 ;
