@@ -1,9 +1,7 @@
 ## Octave program
 
-## This is the solution to the particular set of equality constraints
-## that gives the cost-minimization problem in Meadows or Malls
-
-
+## This program analyzes  the particular set of equality constraints
+## that gives the cost-minimizing solution in Meadows or Malls
 
 ## x = [ GR AR MR GD AD MD ]
 
@@ -16,6 +14,8 @@ b = [300 100 150 300 0 100 ]'
 ## Solve by inverting A
 A_1 = inv(A)
 A_1 * b
+
+
 
 ## Solve by row operations on the augmented matrix 
 A_aug = [A b]
@@ -55,5 +55,5 @@ A_aug(1, :) = A_aug(1, :) - A_aug(4,:)
 
 
 ## Compute the cost of this solution
-dot(c,  A_aug(:, 7))
+c *  A_aug(:, 7)
 

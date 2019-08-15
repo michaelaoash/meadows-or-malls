@@ -1,0 +1,33 @@
+﻿The main concepts and skills that students will encounter and practice during this unit are:
+
+General Linear Programmingx
+* Seeing that for two-variable problems, the optimal value always occurs at a corner point of the feasible region
+* Generalizing the corner-point principle to more than two variables
+* Recognizing that for two-variable problems, corner points can be found as the intersections of lines corresponding to constraint equations or inequalities
+* Generalizing the method of finding corner points to more than two variables
+Solving Linear Equations
+* Using substitution, graphing, and guess-and-check methods to solve systems of linear equations in two variables
+* Developing and using the elimination method to solve systems of linear equations in two or more variables
+* Using the concepts of inconsistent, dependent, and independent systems of equations
+
+Geometry in the Plane and in 3-Space
+* Extending the concept of coordinates to three variables by introducing a third axis perpendicular to the first two
+* Graphing linear equations in three variables and recognizing that these graphs are planes in 3-space
+* Seeing that two distinct points always determine a unique line and that two distinct lines in the plane determine a unique point unless the lines are parallel
+* Examining the possible intersections of planes in 3-space
+* Relating the possible intersections of lines and planes to the algebra of solving linear systems in two or three variables
+
+Matrix Algebra
+* Using matrices to represent information
+* Using problem situations to motivate and develop the definitions of matrix addition and multiplication
+* Examining whether matrix operations have certain properties, such as associativity and commutativity
+
+Matrices and Systems of Linear Equations
+* Seeing that systems of linear equations are equivalent to certain types of matrix equations
+* Recognizing the role of identity and inverse elements in solving certain types of matrix equations
+* Finding matrix inverses by hand by solving systems of linear equations
+* Understanding the relationship between a system of linear equations  having a unique solution and the coefficient matrix being invertible
+
+Technology
+* Entering matrices and doing matrix operations on a graphing calculator
+* Using matrix inversion on a graphing calculator to solve systems of linear equations
